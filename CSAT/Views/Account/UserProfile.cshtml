@@ -1,0 +1,105 @@
+﻿@model CSAT.Models.ProfileViewModel
+@using CSAT.Common;
+@{
+    ViewBag.Title = "Profile";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1>Edit Profile</h1>
+    <hr>
+    <form method="post" action="/Account/UserProfile" enctype="multipart/form-data">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-3">
+                <div class="text-center">
+                    
+                   @if (!string.IsNullOrEmpty(Model.imgName))
+                   {
+                    <img src="~/ProfileImages/@Model.imgName" class="avatar img-circle" alt="avatar" style="height:100px;width:100px" />
+                   }
+                   else
+                   {
+                    <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                   }
+
+                    <h6>Upload a different photo...</h6>
+                    <input type="file" class="form-control" name="file">
+                </div>
+            </div>
+
+            <!-- edit form column -->
+            <div class="col-md-9 personal-info">
+                @*<div class="alert alert-info alert-dismissable">
+                    <a class="panel-close close" data-dismiss="alert">×</a>
+                    <i class="fa fa-coffee"></i>
+                    This is an <strong>.alert</strong>. Use this to show important messages to the user.
+                </div>*@
+                <h3>Personal info</h3>
+
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label>First Name</label>
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Last Name</label>
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label>Email</label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" ,@disabled="disabled"})
+                        </div>
+
+                    </div>
+                    @{
+                        var daylist = CommonUtility.TotalDaysInMonth();
+                        var monthNames = CommonUtility.MonthNames();
+                        var yearList = CommonUtility.TotalNumberOfYears();
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label>Day</label>
+                            @Html.DropDownListFor(m => m.Day, daylist, new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Month</label>
+                            @Html.DropDownListFor(m => m.Month, monthNames, new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Year</label>
+                            @Html.DropDownListFor(m => m.Year, yearList, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    }
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label>Executive Title</label>
+                            @Html.DropDownListFor(x => x.ExecutiveTitle, new List<SelectListItem>()
+{
+    new SelectListItem(){ Text= "CEO", Value = "CEO"},
+    new SelectListItem(){ Text= "CTO", Value = "CTO"},
+    new SelectListItem(){ Text= "CFO", Value = "CFO"},
+    new SelectListItem(){ Text= "COO", Value = "COO"},
+    new SelectListItem(){ Text= "Others", Value = "Others"},
+}, "Select Executive", new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label>User Bio</label>
+                            @Html.TextAreaFor(m => m.UserBio, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-lg btn-info" value="Save Profile" />
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<hr>
+

@@ -1,0 +1,99 @@
+﻿@model CSAT.Models.RegisterViewModel
+@using CSAT.Common;
+    @{
+        ViewBag.Title = "Register";
+    }
+
+    <h2>@ViewBag.Title.</h2>
+    <div class="container">
+
+        <div class="col-lg-12 well">
+            <div class="row">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+                    <h4>Create a new account.</h4>
+                    <hr />
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>First Name</label>
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Last Name</label>
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Email</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Password</label>
+                                @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @{
+                            var daylist = CommonUtility.TotalDaysInMonth();
+                            var monthNames = CommonUtility.MonthNames();
+                            var yearList = CommonUtility.TotalNumberOfYears();
+
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label>Day</label>
+                                    @Html.DropDownListFor(m => m.Day, daylist, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Month</label>
+                                    @Html.DropDownListFor(m => m.Month, monthNames, new { @class = "form-control" })
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Year</label>
+                                    @Html.DropDownListFor(m => m.Year, yearList, new { @class = "form-control" })
+                                </div>
+
+
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Gender</label>
+                                @Html.DropDownListFor(x => x.Gender, new List<SelectListItem>()
+    {
+        new SelectListItem(){ Text= "Male", Value = "Male"},
+        new SelectListItem(){ Text= "Female", Value = "Female"},
+    }, "Select Gender", new { @class = "form-control" })
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Executive Title</label>
+                                @Html.DropDownListFor(x => x.ExecutiveTitle, new List<SelectListItem>()
+    {
+        new SelectListItem(){ Text= "CEO", Value = "CEO"},
+        new SelectListItem(){ Text= "CTO", Value = "CTO"},
+        new SelectListItem(){ Text= "CFO", Value = "CFO"},
+        new SelectListItem(){ Text= "COO", Value = "COO"},
+        new SelectListItem(){ Text= "Others", Value = "Others"},
+    }, "Select Executive", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-lg btn-info" value="Register" />
+                    </div>
+
+                            }
+            </div>
+        </div>
+    </div>
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
